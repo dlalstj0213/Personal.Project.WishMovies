@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WishMoviesEntity extends MemoryDbEntity implements Serializable{
+public class WishMovieEntity extends MemoryDbEntity implements Serializable{
     private String title;
     private String subtitle;
     private String link;

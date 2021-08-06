@@ -1,6 +1,6 @@
 package com.example.server.dao;
 
-import com.example.server.entity.WishMoviesEntity;
+import com.example.server.entity.WishMovieEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,8 @@ public class MovieRepositoryTest {
     @Autowired
     private MovieRepository movieRepository;
 
-    private WishMoviesEntity create() {
-        var wishMoviesEntity = new WishMoviesEntity();
+    private WishMovieEntity create() {
+        var wishMoviesEntity = new WishMovieEntity();
         wishMoviesEntity.setTitle("title");
         wishMoviesEntity.setSubtitle("subTitle");
         wishMoviesEntity.setLink("");
