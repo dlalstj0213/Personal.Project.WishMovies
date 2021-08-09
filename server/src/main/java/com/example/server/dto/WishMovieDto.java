@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WishMovieDto {
-    private int index;
+    private Integer index;
     private String title;
     private String subtitle;
     private String link;
@@ -19,6 +19,8 @@ public class WishMovieDto {
     private String director;
     private String actor;
     private float userRating;
+    private boolean isWatched;
+    private int watchCount;
 
 /**
  * WishMovieDto와 WishMovieEntity로 분리한 이유:

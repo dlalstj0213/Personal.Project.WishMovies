@@ -22,4 +22,6 @@ public class WishMovieEntity extends MemoryDbEntity implements Serializable{
     private String director;
     private String actor;
     private float userRating;
+    private boolean isWatched;
+    private int watchCount;
 }

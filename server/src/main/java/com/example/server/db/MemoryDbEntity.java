@@ -10,5 +10,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemoryDbEntity implements Serializable {
-    private int index;
+    private Integer index;
 }
