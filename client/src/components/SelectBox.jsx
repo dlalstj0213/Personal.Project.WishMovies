@@ -1,18 +1,17 @@
 import React, { memo } from 'react';
 
-const SelectBox = memo(({ category, option, allOption }) => {
-	console.log(allOption);
+const SelectBox = memo(({ category, option, allOption, reference }) => {
 	return (
 		<>
 			<label className="">{category}</label>
-			<select name="" id="">
+			<select ref={reference}>
 				{allOption && (
-					<option className="" value="all" selected>
+					<option value="" defaultValue="">
 						전체
 					</option>
 				)}
 				{option.map((item) => (
-					<option value="1">{item}</option>
+					<option value={item.code}>{item.name}</option>
 				))}
 			</select>
 		</>
