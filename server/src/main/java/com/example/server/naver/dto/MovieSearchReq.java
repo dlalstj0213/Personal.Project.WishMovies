@@ -23,8 +23,8 @@ public class MovieSearchReq {
         map.add("query", query);
         if (display != 0) map.add("display", String.valueOf(display));
         if (start != 0) map.add("start", String.valueOf(start));
-        if (!"".equals(genre)) map.add("genre", genre);
-        if (!"".equals(country)) map.add("country", country);
+        if (!"".equals(genre)) map.add("genre", genre.trim());
+        if (!"".equals(country)) map.add("country", country.trim());
         if (yearFrom != 0) map.add("yearFrom", String.valueOf(yearFrom));
         if (yearTo != 0) map.add("yearTo", String.valueOf(yearTo));
         return map;

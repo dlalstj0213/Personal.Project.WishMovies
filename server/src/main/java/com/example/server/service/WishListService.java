@@ -9,6 +9,7 @@ import com.example.server.naver.dto.MovieSearchReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,15 +20,17 @@ public class WishListService {
     private final NaverClient naverClient;
     private final MovieRepository movieRepository;
 
-    public WishMovieDto search(String query) {
+    public List<WishMovieDto> search(String query, String country, String genre) {
         //영화 검색
         var movieSearchReq = new MovieSearchReq();
         movieSearchReq.setQuery(query);
+        movieSearchReq.setCountry(country);
+        movieSearchReq.setGenre(genre);
 
         var movieSearchRes = naverClient.searchMovies(movieSearchReq);
 
         if (movieSearchRes.getItems().size() > 0) {
-            var movieItem = movieSearchRes.getItems().stream().findFirst().get();
+            //var movieItem = movieSearchRes.getItems().stream().findFirst().get();
             // 이미지 검색
             // 이미지 검색은 후에 해당 영화 관련 이미지 포스팅을 위한 기능이기 때문에 나중에 추가하자.
             /*
@@ -46,21 +49,25 @@ public class WishListService {
             }
              */
 
-            // 결과물 리턴
-            var result = new WishMovieDto();
-            result.setTitle(movieItem.getTitle());
-            result.setSubtitle(movieItem.getSubtitle());
-            result.setLink(movieItem.getLink());
-            result.setImage(movieItem.getImage());
-            result.setPubDate(movieItem.getPubDate());
-            result.setDirector(movieItem.getDirector());
-            result.setActor(movieItem.getActor());
-            result.setUserRating(movieItem.getUserRating());
-
+            var result = movieSearchRes.getItems().stream().map(movie -> {
+                // 결과물 리턴
+                var dto = new WishMovieDto();
+                dto.setTitle(movie.getTitle());
+                dto.setSubtitle(movie.getSubtitle());
+                dto.setLink(movie.getLink());
+                dto.setImage(movie.getImage());
+                dto.setPubDate(movie.getPubDate());
+                dto.setDirector(movie.getDirector());
+                dto.setActor(movie.getActor());
+                dto.setUserRating(movie.getUserRating());
+                return dto;
+            }).collect(Collectors.toList());
+            System.out.println(result.size());
             return result;
         }
 
-        return new WishMovieDto();
+
+        return new ArrayList<WishMovieDto>();
     }
 
     public WishMovieDto add(WishMovieDto wishMovieDto) {

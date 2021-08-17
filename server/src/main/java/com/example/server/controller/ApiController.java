@@ -19,8 +19,9 @@ public class ApiController {
     private final WishListService wishListService;
 
     @GetMapping("/search")
-    public WishMovieDto search(@RequestParam String query) {
-        return wishListService.search(query);
+    public List<WishMovieDto> search(@RequestParam String query, @RequestParam String country, @RequestParam String genre) {
+        log.info("{}, {}, {}", query, country, genre);
+        return wishListService.search(query, country, genre);
     }
 
     @PostMapping("")

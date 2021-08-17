@@ -13,7 +13,7 @@ public class WishListServiceTest {
 
     @Test
     public void searchTest() {
-        var result = wishListService.search("베테랑");
+        var result = wishListService.search("베테랑", "", "");
         System.out.println(result);
 
         Assertions.assertNotNull(result);
