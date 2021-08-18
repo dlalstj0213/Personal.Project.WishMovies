@@ -8,7 +8,7 @@ interface MemoryDbRepository<T> {
 
     T save(T entity);
 
-    void deleteById(int index);
+    boolean deleteById(int index);
 
     List<T> findAll();
 }

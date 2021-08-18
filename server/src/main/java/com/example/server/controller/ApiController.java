@@ -20,13 +20,11 @@ public class ApiController {
 
     @GetMapping("/search")
     public List<WishMovieDto> search(@RequestParam String query, @RequestParam String country, @RequestParam String genre) {
-        log.info("{}, {}, {}", query, country, genre);
         return wishListService.search(query, country, genre);
     }
 
     @PostMapping("")
     public WishMovieDto add(@RequestBody WishMovieDto wishMovieDto) {
-        log.info("{}", wishMovieDto);
         return wishListService.add(wishMovieDto);
     }
 
@@ -36,8 +34,11 @@ public class ApiController {
     }
 
     @DeleteMapping("/{index}")
-    public void delete(@PathVariable int index) {
-        wishListService.delete(index);
+    public ResponseEntity delete(@PathVariable int index) {
+        if(wishListService.delete(index)){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PutMapping("/{index}")

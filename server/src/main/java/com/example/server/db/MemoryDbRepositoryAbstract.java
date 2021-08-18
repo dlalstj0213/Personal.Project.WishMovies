@@ -60,7 +60,7 @@ abstract public class MemoryDbRepositoryAbstract<T extends MemoryDbEntity> imple
     }
 
     @Override
-    public void deleteById(int index) {
+    public boolean deleteById(int index) {
         var optionalEntity = db.stream().filter(row -> row.getIndex() == index).findFirst();
         if (optionalEntity.isPresent()) {   // 데이터가 이미 있는경우
             db.remove(optionalEntity.get());
@@ -69,7 +69,9 @@ abstract public class MemoryDbRepositoryAbstract<T extends MemoryDbEntity> imple
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            return true;
         }
+        return false;
     }
 
     @Override

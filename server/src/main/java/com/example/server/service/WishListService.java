@@ -79,8 +79,8 @@ public class WishListService {
         return movieRepository.findAll().stream().map(movie -> entityToDto(movie)).collect(Collectors.toList());
     }
 
-    public void delete(int index) {
-        movieRepository.deleteById(index);
+    public boolean delete(int index) {
+        return movieRepository.deleteById(index);
     }
 
     public WishMovieDto addWatched(int index) {
