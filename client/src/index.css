@@ -74,15 +74,18 @@ body {
 	margin-left: 24px;
 } */
 
-.navbar-menu .navbar-menu-item:hover {
+.navbar-menu-item {
+	cursor: pointer;
+}
+.navbar-menu-item:hover {
 	background-color: var(--color-white);
 	border-radius: 20px;
 }
-.navbar-menu li:hover a {
+.navbar-menu-item:hover a {
 	color: var(--color-black);
 }
 
-.navbar-menu li a {
+.navbar-menu-item a {
 	text-decoration: none;
 	color: white;
 }

@@ -1,10 +1,11 @@
 import React from 'react';
 import Movies from '../components/Movies';
 
-const AllMovies = ({
+const MyMovies = ({
 	movies,
 	selectedMovie,
 	movieService,
+	onMyMovies,
 	onSelect,
 	onDelete,
 	onAdd,
@@ -15,10 +16,12 @@ const AllMovies = ({
 			selectedMovie={selectedMovie}
 			movieService={movieService}
 			onSelect={onSelect}
+			isMyMovie={true}
+			onMyMovies={onMyMovies}
 			onDelete={onDelete}
 			onAdd={onAdd}
 		/>
 	);
 };
 
-export default AllMovies;
+export default MyMovies;

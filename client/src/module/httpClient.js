@@ -1,10 +1,11 @@
 export default class HttpClient {
-	constructor(baseURL) {
+	constructor(baseURL, baseRequestURL) {
 		this.baseURL = baseURL;
+		this.baseRequestURL = baseRequestURL;
 	}
 
 	async fetch(url, options) {
-		const res = await fetch(`${this.baseURL}${url}`, {
+		const res = await fetch(`${this.baseURL}${this.baseRequestURL}${url}`, {
 			...options,
 			headers: {
 				'Content-Type': 'application/json',
@@ -15,7 +16,7 @@ export default class HttpClient {
 		try {
 			data = await res.json();
 		} catch (error) {
-			console.error(error);
+			if (options.method !== 'DELETE') console.error(error);
 		}
 
 		if (res.status > 299 || res.status < 200) {

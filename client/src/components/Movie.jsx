@@ -1,6 +1,13 @@
 import React, { memo } from 'react';
 
-const Movie = memo(({ movie, movieService, isMyMovie }) => {
+const Movie = memo(({ movie, onDelete, onAdd, isMyMovie }) => {
+	const onClickAdd = () => {
+		onAdd(movie);
+	};
+	const onClickDelete = () => {
+		onDelete(movie);
+	};
+
 	return (
 		<div className="movie-selected">
 			<h1 className="movie-title">
@@ -20,9 +27,13 @@ const Movie = memo(({ movie, movieService, isMyMovie }) => {
 							평점: <span>{movie.userRating}</span>
 						</p>
 						{!!isMyMovie ? (
-							<button className="del-button">내 영화 제거</button>
+							<button className="del-button" onClick={onClickDelete}>
+								내 영화 제거
+							</button>
 						) : (
-							<button className="add-button">내 영화 추가</button>
+							<button className="add-button" onClick={onClickAdd}>
+								내 영화 추가
+							</button>
 						)}
 					</div>
 				</div>

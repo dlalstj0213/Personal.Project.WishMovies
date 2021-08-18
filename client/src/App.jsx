@@ -1,14 +1,29 @@
 import './app.css';
-import { useCallback, useEffect, useState } from 'react';
+
 import Header from './components/Header';
 import Navbar from './components/Navbar';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
+import { useCallback, useState } from 'react';
 import Search from './page/Search';
 import AllMovies from './page/AllMovies';
+import MyMovies from './page/MyMovies';
 
 function App({ movieService }) {
+	const history = useHistory();
 	const [movies, setMovies] = useState([]);
 	const [selectedMovie, setSelectedMovie] = useState(null);
+
+	const onSearchMovies = () => {
+		history.push('/');
+		setMovies([]);
+		setSelectedMovie(null);
+	};
+
+	const onFindMyMovies = () => {
+		history.push(`/my`);
+		setMovies([]);
+		setSelectedMovie(null);
+	};
 
 	const selectMovie = (movie) => {
 		setSelectedMovie(movie);
@@ -16,34 +31,73 @@ function App({ movieService }) {
 
 	const search = useCallback(
 		(query, country, genre) => {
-			// setSelectedMovie(null);
+			onSearchMovies();
 			movieService.search(query, country, genre).then((movies) => {
-				setMovies(movies);
+				setMovies([...movies]);
 			});
 		},
 		[movieService]
 	);
 
-	useEffect(() => {
-		movieService.search('베테랑', '', '').then((movies) => {
-			setMovies(movies);
-			setSelectedMovie(movies[0]);
+	const findMyMovies = () => {
+		movieService.findMyMovies().then((movies) => {
+			setMovies([...movies]);
 		});
-	}, [movieService]);
+	};
 
-	console.log(movies); // 데이터 테스팅 코드
+	const addMovie = (movie) => {
+		movieService
+			.add(movie)
+			.then((result) => {
+				console.log(result);
+				console.log('SUCCESS');
+			})
+			.catch((err) => {});
+	};
+
+	const deleteMovie = (movie) => {
+		const index = movie.index;
+		movieService
+			.delete(index)
+			.then(() => {
+				setMovies((movies) => movies.filter((m) => m.index !== index));
+				setSelectedMovie(null);
+			})
+			.catch((err) => {});
+	};
 
 	return (
 		<div className="app">
-			<Navbar />
+			<Navbar onSearchMovies={onSearchMovies} onFindMyMovies={onFindMyMovies} />
 			<Header />
 			<Search onSearch={search} />
-			<AllMovies
-				movies={movies}
-				selectedMovie={selectedMovie}
-				movieService={movieService}
-				onSelect={selectMovie}
-			/>
+			<Switch>
+				(
+				<>
+					<Route exact path="/">
+						<AllMovies
+							movies={movies}
+							selectedMovie={selectedMovie}
+							movieService={movieService}
+							onSelect={selectMovie}
+							onDelete={deleteMovie}
+							onAdd={addMovie}
+						/>
+					</Route>
+					<Route exact path="/my">
+						<MyMovies
+							movies={movies}
+							selectedMovie={selectedMovie}
+							movieService={movieService}
+							onMyMovies={findMyMovies}
+							onSelect={selectMovie}
+							onDelete={deleteMovie}
+							onAdd={addMovie}
+						/>
+					</Route>
+				</>
+				)
+			</Switch>
 		</div>
 	);
 }
